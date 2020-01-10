@@ -13,8 +13,8 @@ jupyter:
     name: python3
 ---
 
-# Name(s)
-**PUT YOUR FULL NAME(S) HERE**
+# Name
+**Ethan Goldfarb**
 
 
 **Instructions:** This is an individual assignment, but you may discuss your code with your neighbors.
@@ -46,78 +46,118 @@ For the following exercises please read the Python appendix in the Marsland text
 ## Exercise 1
 
 ```python
-# YOUR SOLUTION HERE
-#a=1000
-print('this is my answer',a+1) 
+import numpy as np
+a = np.ones((6,4)) * 2
+# note: there is a fill and fold command
+# kwargs: dtype=int, etc.
+print(a)
 ```
 
 ## Exercise 2
 
 ```python
-# YOUR SOLUTION HERE
-a=2000
+b = np.ones((6,4)) + np.vstack([(np.eye((4))*2),[0,0,0,0],[0,0,0,0]])
+# note: fold diagonal, fill diagonal, also b[range(n),range(n)] = val
+#
+print(b)
 ```
 
 ## Exercise 3
 
 ```python
-# YOUR SOLUTION HERE
+# No, not standard matrix multiplication.
+# One may do pairwise multiplication, but not matrix multiplication. 
+# Simply put, the dimensions are not proper for matrix multiplication
 ```
 
 ## Exercise 4
 
 ```python
-# YOUR SOLUTION HERE
+atb = np.dot(a.transpose(),b)
+bta = np.dot(a,b.transpose())
+print(atb)
+print(bta)
+# these results are different sizes, as multiplication of a 4 x 6 matrix with a 6 x 4 
+#will result in  4 x 4 matrix, and in a 6x6 for 6x4 x 4x6
 ```
 
 ## Exercise 5
 
 ```python
-# YOUR SOLUTION HERE
+def p():
+    print("I think it works ", end='lol')
+p()
 ```
 
 ## Exercise 6
 
 ```python
-# YOUR SOLUTION HERE
+def p2():
+    r = np.reshape(np.random.rand(24), (4,-1))
+
+    print(r)
+    print(np.sum(r))
+    print(np.sum(r)/24)
+    print(np.min(r))
+    print(np.max(r))
+p2()
 ```
 
 ## Exercise 7
 
 ```python
-# YOUR SOLUTION HERE
+def p3():
+    a = np.reshape(np.random.randint(0,3,24), (4,-1))
+    print(a)
+    count = 0
+    for x in range(len(a)):
+        for y in range(len(a[0])):
+            if a[x][y] == 1:
+                count += 1
+    print(count)
+    print(np.where(a == 1, a, 0))
+    print(np.sum(np.where(a == 1, a, 0)))
+
+    #np.info(np.where)
+p3()
 ```
-
-## Excercises 8-???
-While the Marsland book avoids using another popular package called Pandas, we will use it at times throughout this course. Please read and study [10 minutes to Pandas](https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html) before proceeding to any of the exercises below.
-
 
 ## Exercise 8
 Repeat exercise A.1 from Marsland, but create a Pandas DataFrame instead of a NumPy array.
 
 ```python
-# YOUR SOLUTION HERE
+import pandas as pd
+pdf = pd.DataFrame(np.ones((6,4)) * 2, index =list("ABCDEF"), columns=list("ABCD"))
+print(pdf)
 ```
 
 ## Exercise 9
 Repeat exercise A.2 using a DataFrame instead.
 
 ```python
-# YOUR SOLUTION HERE
+pdf2 = pd.DataFrame(np.vstack([np.eye(4),[0,0,0,0],[0,0,0,0]]))
+print(pdf2)
+# b.iloc[range(n),range(n)] = val
+# index location of column
 ```
 
 ## Exercise 10
 Repeat exercise A.3 using DataFrames instead.
 
 ```python
-# YOUR SOLUTION HERE
+pdf3 = pd.DataFrame(pdf.values * pdf2.values)
+print(pdf3)
+#dot product (matrix mult) will not work for aforementioned reasons in E3
 ```
 
 ## Exercise 11
 Repeat exercise A.7 using a dataframe.
 
 ```python
-# YOUR SOLUTION HERE
+r = pd.DataFrame(np.random.randint(0,3,(5,5)))
+print(r)
+print(r.where(r == 1, 0))
+print(r.where(r == 1, 0).values.sum())
 ```
 
 ## Exercises 12-14
@@ -137,22 +177,23 @@ Notice how we have nice headers and mixed datatypes? That is one of the reasons 
 How do you select the ``name`` column without using .iloc?
 
 ```python
-## YOUR SOLUTION HERE
+## titanic_df['name']
 ```
 
 ## Exercise 13
 After setting the index to ``sex``, how do you select all passengers that are ``female``? And how many female passengers are there?
 
 ```python
-## YOUR SOLUTION HERE
+## loc is value/label based indexing
 titanic_df.set_index('sex',inplace=True)
+titanic_df.loc['female']
 ```
 
 ## Exercise 14
 How do you reset the index?
 
 ```python
-## YOUR SOLUTION HERE
+titanic_df.reset_index(inplace=True)
 ```
 
 ```python
